@@ -49,6 +49,10 @@ public class BinTree {
         return this.key;
     }
 
+    public void setKey(Integer key){
+        this.key = key;
+    }
+
     public static void preOrderTraverse(BinTree bt){
         /**
          * Preorder traverse goes in order root-left-right
@@ -201,7 +205,7 @@ public class BinTree {
 
             // Case 3: Two children i.e right and left are not null
             Integer minValue = min(bt.getRightChild()).getKey();
-            bt.key = minValue;
+            bt.setKey(minValue);
             bt.setRightChild(remove(minValue, bt.getRightChild()));
         }
         return bt;
