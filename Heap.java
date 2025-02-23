@@ -12,7 +12,17 @@ import java.util.Arrays;
 class Heap {
     private int capacity = 10;
     private int size = 0;
-    int [] items = new int[capacity];
+    int [] items;
+
+    public Heap(){
+        items = new int[capacity];
+    }
+
+    public Heap(int[] arr){
+        size = capacity = arr.length;
+        items = arr;
+        buildHeapToBottomUp();
+    }
 
     public static void main(String[] args){
         Heap heap_one = new Heap();
@@ -29,6 +39,26 @@ class Heap {
 
         for(int i = 0; i < 10; i++){
             System.out.print(heap_one.items[i] + " ");
+        }
+        System.out.println("\n");
+
+        System.out.println("Testing for array to heap");
+        int[] arr = {70, 29, 68, 65, 32, 19, 16, 13, 26, 31};
+        
+        System.out.println("Original array");
+        for(int i = 0; i < 10; i++){
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+
+        startTime = System.nanoTime();
+        Heap heap_two = new Heap(arr);
+        endTime = System.nanoTime();
+        System.out.println("Creating the heap took " + (endTime - startTime) + " ms");
+
+        System.out.println("Final heap");
+        for(int i = 0; i < 10; i++){
+            System.out.print(heap_two.items[i] + " ");
         }
         System.out.println("\n");
     }
@@ -52,14 +82,13 @@ class Heap {
     }
 
     private void ensureExtraCapacity(){
-        if(size == capacity){
+        if(size >= capacity){
             items = Arrays.copyOf(items, capacity * 2);
             capacity *= 2;
         }
     }
 
-    private void heapifyDown(){
-        int index = 0;
+    private void heapifyDown(int index){
         while (hasLeftChild(index)){
             int smallerChildIndex = getLeftChildIndex(index);
             if (hasRightChild(index) && rightChild(index) < leftChild(index)){
@@ -81,6 +110,17 @@ class Heap {
         while(hasParent(index) && parent(index) > items[index]){
             swap(getParentIndex(index), index);
             index = getParentIndex(index);
+        }
+    }
+
+    private void buildHeapToBottomUp(){
+        /**
+         * Start at the level containing the last non-leaf node i.e array[n/2]
+         * Make the subtree rooted at the last non-leaf node into a heap by heapifyDown()
+         * Move in current level from right to left
+         */
+        for(int i = (size / 2) - 1; i >= 0; i--){
+            heapifyDown(i);
         }
     }
 
@@ -108,7 +148,7 @@ class Heap {
         size--;
 
         // call a heapifyDown() to control the heap size to decrease the capacity if capacity / 2 < size
-        heapifyDown();
+        heapifyDown(0);
         return item;
     }
 }
