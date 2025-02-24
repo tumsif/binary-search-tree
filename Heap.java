@@ -61,6 +61,14 @@ class Heap {
             System.out.print(heap_two.items[i] + " ");
         }
         System.out.println("\n");
+
+        System.out.println("Creating a sorted array");
+        int[] arr2 = {13, 7, 5, 21, 45, 2, 17, 3, 11};
+        Heap sortedHeap = new Heap(arr2);
+        for(int i=0; i<arr2.length; i++){
+            System.out.print(sortedHeap.poll() + " ");
+        }
+        System.out.println();
     }
 
     private int getLeftChildIndex(int parentIndex){ return 2 * parentIndex + 1; }

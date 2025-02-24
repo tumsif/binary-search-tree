@@ -76,5 +76,34 @@ public class Main {
 
         System.out.println("\nThe in order traversal of the resulting tree after deleting which took " + (endTime-startTime) + " ns");
         BinTree.inOrderTraversal(newTree);
+
+        System.out.println();
+        System.out.println(Main.fact(5));
+
+        System.out.println("Converting a number to another base");
+        System.out.print("102 to base 2 ");
+        Main.convertToBase(102, 2);
+        System.out.println();
+
+        System.out.print("102 to base 9 ");
+        Main.convertToBase(102, 9);
+        System.out.println();
+
+        System.out.print("678 to base 9 ");
+        Main.convertToBase(678, 9);
+        System.out.println();
+    }
+
+    public static long fact(int n){
+        if(n <= 1) return 1;
+        else return n * fact(n - 1);
+    }
+
+    public static void convertToBase(int n, int base){
+        if(n >= base)
+        {
+            convertToBase(n / base, base);
+        }
+        System.out.print(n % base);
     }
 }
